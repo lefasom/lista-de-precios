@@ -1,0 +1,14 @@
+# .gitignore
+
+# Virtual Environment
+venv/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+
+# Static files inside the 'src' directory
+src/static/video
