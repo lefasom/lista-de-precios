@@ -1,0 +1,1 @@
+MONGO_URI=mongodb+srv://algo:iJJNPdqRhAgnATgu@cluster0.q0nom.mongodb.net/productos?retryWrites=true&w=majority
