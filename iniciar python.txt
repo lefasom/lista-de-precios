@@ -25,3 +25,4 @@ pip install -r requirements.txt
 pip install pyinstaller 
 pyinstaller --onefile main.py 
 
+tener en cuenta que el requirements debe estar al nivel del app.py
