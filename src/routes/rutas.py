@@ -6,6 +6,7 @@ from service.controller import (
     get_lista_service,
     update_lista_service,
     delete_lista_service,
+    excel_generate,    
 )
 
 rutas = Blueprint("rutas", __name__)
@@ -31,6 +32,6 @@ def lista(id):
     return update_lista_service(id)
 
 
-# @rutas.route("/<id>", methods=["PUT"])
-# def update_lista(id):
-#     return update_lista_service(id)
+@rutas.route("/", methods=["GET"])
+def export_excel():
+    return excel_generate()

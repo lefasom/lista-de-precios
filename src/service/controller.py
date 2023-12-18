@@ -1,9 +1,10 @@
-from flask import request, Response, redirect, url_for
+from flask import request, Response, redirect, url_for,send_file
 from bson import json_util, ObjectId
 from datetime import datetime  # Importar datetime
-
+from openpyxl import Workbook
+from io import BytesIO
 from config.mongodb import mongo
-
+import json
 
 def create_lista_service():
     producto = request.form.get("producto")
@@ -60,3 +61,40 @@ def update_lista_service(id):
             if response.modified_count >= 1:
                 return redirect(url_for("Home"))
     return "Invalid payload or Lista not found", 400
+def excel_generate():
+  
+    file_path = create_excel()
+    return send_file(
+        file_path,
+        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        as_attachment=True,
+        download_name='datos.xlsx'  # Nombre del archivo para descargar
+    )
+
+def create_excel():   
+    data = mongo.db.lista.find().sort(
+        "last_modified", -1
+    )  # Ordenar por last_modified en orden descendente
+    data_json = json_util.dumps(data)
+    # Cargar los datos JSON
+    data = json.loads(data_json)
+
+    wb = Workbook()
+    ws = wb.active
+    # Escribir encabezados de columna en la hoja de cálculo
+    # headers = list(data[0].keys())
+    # ws.append(headers)
+    filtered_headers = ["producto", "precio"]
+    ws.append(filtered_headers)
+   # Escribir datos en la hoja de cálculo
+    for item in data:
+        row_data = [str(item.get(header, '')) for header in filtered_headers]
+        ws.append(row_data)
+
+    # Crear un archivo en memoria
+    excel_file = BytesIO()
+    wb.save(excel_file)
+    # wb.save('datos.xlsx')
+    excel_file.seek(0)
+
+    return excel_file

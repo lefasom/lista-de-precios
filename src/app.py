@@ -14,7 +14,7 @@ app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 mongo.init_app(app)
 
 
-@app.route("/")
+@app.route("/") #decorador
 def Home():
     cursor = mongo.db.lista.find().sort("last_modified", -1)  # Ordenar por last_modified en orden descendente
     listas = list(cursor)  # Convierte el cursor a una lista
