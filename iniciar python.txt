@@ -20,9 +20,8 @@ python -m pip install openpyxl
 //con esto genero el archivo que guarda las dependencias se genera al ultimo
 python -m pip freeze > requirements.txt 
 pip install -r requirements.txt 
+tener en cuenta que el requirements debe estar al nivel del app.py
 
 // crear executable
 pip install pyinstaller 
 pyinstaller --onefile main.py 
-
-tener en cuenta que el requirements debe estar al nivel del app.py
